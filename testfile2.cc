@@ -1,52 +1,39 @@
+// This program lets the user enter a filename.
 #include <iostream>
 #include <string>
-#include <cstdlib>
-#include <math>
-
+#include <fstream>
 using namespace std;
-
-
 
 int main()
 {
-    string userBinary;
-    int stringLength;
-    int counter = 0;
-    string continu = "y";
-    int total = 0;
-    int bitArray[8] = {128,64,32,16,8,4,2,1};
-    
-    while (continu == "y" || continu == "Y")
-    {
-        while (counter < stringLength || stringLength == 0)
-        {
-            cout << "Please enter a BINARY NUMBER and press <ENTER>." << endl;
-            getline(cin,userBinary);
-            stringLength = userBinary.length();
-            //cout << stringLength;
-        
-            if (userBinary[counter] != '1' && userBinary[counter] != '0')
-                {
-                    cout << "Please enter a BINARY number (only 0s and 1s please)." << endl;
-                    counter = 0;
-                }
-            else
-            {
-                if (userBinary[counter-1] == '1')
-                {
-                    //do some calcuations here
-                    counter++;
-                    total = total + bitArray[counter-1];
-                }
-                else
-                {
-                    counter++;
-                }
-            }
-        }
-    cout << total;
-    }       
-    return 0;
-  
+   ifstream inputFile;
+   string filename;
+   int number;
 
+   // Get the filename from the user.
+   cout << "Enter the filename: ";
+   cin >> filename;
+
+   // Open the file.
+   inputFile.open(filename);
+
+   // If the file successfully opened, process it.
+   if (inputFile)
+   {
+      // Read the numbers from the file and
+      // display them.
+      while (inputFile >> number)
+      {
+         cout << number << endl;
+      }
+
+      // Close the file.
+      inputFile.close();
+   }
+   else
+   {
+	   // Display an error message.
+	   cout << "Error opening the file.\n";
+   }
+   return 0;
 }
