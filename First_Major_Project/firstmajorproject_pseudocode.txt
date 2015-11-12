@@ -1,0 +1,39 @@
+start
+	Declarations
+	    //no global variables. although I think userName should be global.............
+
+    output "Welcome to The Math Game. Challenge yourself to answer simple math problems and earn money!"
+    
+    menu()
+    checkName()
+    openFile()
+    statistics()
+    
+    
+    //menu()
+        //mainly cout statements
+        
+    
+    checkName()
+        Declarations
+            string userName
+            int counter = 0
+            int nameLength 
+        output "Please type in your name. Use only letters. No special characters.\n"
+        input userName
+        
+        while (counter <= nameLength && nameLength != 0)
+        
+            if (!isalpha(userName[counter]))
+                output "Your name contains something other than letters. Please try again\n"
+                counter = 0
+                input userName
+            else
+                counter ++
+                
+        return userName
+    
+    openFile()
+        Declarations
+            string userFileName = userName.checkName() + ".txt"
+            
