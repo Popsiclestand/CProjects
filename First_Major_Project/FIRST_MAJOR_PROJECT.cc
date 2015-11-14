@@ -34,7 +34,7 @@ int main()
     cout << string(50, '\n'); //clears screen for the init menu
     retrieveStats();
     cout << string(50, '\n'); //clears screen for the menu
-    displayStats();
+    displayStats(retrieveStats());
     cout << endl;
     menu();
     updateStats(inputUserName,correct);
@@ -62,9 +62,11 @@ string retrieveStats()
     string inputUserName = "";
     ifstream inputUserNameInFile;
     ofstream outputUserNameOutFile;
+    int defaultData[3] = {0,0,0};
+    int counter = 0;
     
     cout << "USER NAME: ";
-    cin >> inputUserName;
+    getline >> (cin, inputUserName);
     
     inputUserNameInFile.open((inputUserName + ".txt").c_str());
     
@@ -77,6 +79,12 @@ string retrieveStats()
         cout << "Your user name does not exist, but one shall be created for you." << endl;
         cout << endl;
         outputUserNameInFile.open((inputUserName + ".txt").c_str());
+        
+        for (counter = 0; counter <= 2 ; counter++)
+        {
+            outputUserNameOutFile >> defaultData[counter] << "\n";
+        }
+        
         outputUserNameOutFile.close();
     }
     
@@ -86,13 +94,24 @@ string retrieveStats()
 //function that displays saved user stats
 void displayStats(string displayStatsUser)
 {
-    string userNameStats; //pulls from the return value of initMenu
+    string userNameStats = displayStatsUser; //pulls from the return value of initMenu
     ifstream statsInfile;
     ofstream statsOutfile;
-    string userStats[3] = {}; //holds an array of user stats pulled from file
-    string userStatsTitles[3] = {};
+    int userStats[3] = {}; //holds an array of user stats pulled from file
+    string userStatsTitles[3] = {"Number of correct answers: ", "Number of wrong answers: ", "Amount of money earned: "};
+    int counter = 0;
+    int data;
     
-    cout << "prints out user stats using a loop that cycles through parallel arrays"
+    cout << "Current Statistics for " << userNameStats << ":" << endl;
+    cout << "***********************************" << endl;
+    
+    statsInfile.open((userNameStats + ".txt").c_str());
+     while (!statsInfile.eof())
+        {
+            getline(statsInfile,userStats);
+            cout << data << endl;
+        }
+    statsInfile.close();
     
 }
 
