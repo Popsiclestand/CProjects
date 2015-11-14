@@ -4,36 +4,34 @@
 #include <fstream>
 using namespace std;
 
+
+string statement();
+int numbers(int x, int y);
+
 int main()
 {
-   ifstream inputFile;
-   string filename;
-   int number;
-
-   // Get the filename from the user.
-   cout << "Enter the filename: ";
-   cin >> filename;
-
-   // Open the file.
-   inputFile.open(filename);
-
-   // If the file successfully opened, process it.
-   if (inputFile)
-   {
-      // Read the numbers from the file and
-      // display them.
-      while (inputFile >> number)
-      {
-         cout << number << endl;
-      }
-
-      // Close the file.
-      inputFile.close();
-   }
-   else
-   {
-	   // Display an error message.
-	   cout << "Error opening the file.\n";
-   }
+   string newText;
+   statement();
+   newText = statement();
+   //numbers(2,4);
+   
+   cout << newText << endl;
+   cout << numbers(2,4);
+   
    return 0;
+}
+
+string statement()
+{
+   string text = "Print this text";
+   return text;
+}
+
+int numbers(int x, int y)
+{
+   int answer;
+
+   answer = x + y;
+   
+   return answer;
 }

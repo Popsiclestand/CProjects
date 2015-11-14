@@ -48,17 +48,14 @@ void mainMenu()
         cout << "Dividsion Function Here" << endl;
         break;
         
-        case 'Y':
+        case 'N':
         cout << "Quit function" << endl;
         break;
         
-        case 'y':
+        case 'n':
         cout << "Quit function" << endl;
         break;
     }
-    
-    
-
     
 }
 
@@ -120,7 +117,7 @@ string menu()
     
     //figure out how to convert userName to upper case to make sure any case
     //is acceptable for file name.
-
+    cout << string(50, '\n');
     userFile(userName);
 
 
