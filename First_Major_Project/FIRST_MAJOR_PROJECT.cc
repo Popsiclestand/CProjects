@@ -13,7 +13,7 @@ using namespace std;
 void credits();
 string retriveStats();
 string menu();
-string validateUserResponse();
+void validateUserResponse(string userEntry);
 bool generateAddition();
 bool generateSubtraction();
 bool generateMultiplication();
@@ -54,8 +54,12 @@ void credits()
     cout << "*************************************" << endl;
 }
 
-//takes input of name, checks whether a file exists, creates a file if one does not exist
-//if file is new, it creates a specific set of null data for the new user in the file and closes
+//takes input of user's name, checks whether a file exists, creates a file if one does not exist
+//if file is new, it generates a set of default values for the new user in the file and closes
+//this module has been tested and works!
+//the only advanced addition i would like is to convert all to upper case so that returning
+//users can access their previous stats/file even if they make mistakes in case.
+//probably need to include input validation in case of the use of special characters
 
 string retrieveStats()
 {
@@ -66,7 +70,11 @@ string retrieveStats()
     int counter = 0;
     
     cout << "USER NAME: ";
-    getline >> (cin, inputUserName);
+    cin >> inputUserName;
+    cin.clear();
+    cin.ignore();
+    
+    validateUserResponse(inputUserName);
     
     inputUserNameInFile.open((inputUserName + ".txt").c_str());
     
@@ -78,11 +86,11 @@ string retrieveStats()
     {
         cout << "Your user name does not exist, but one shall be created for you." << endl;
         cout << endl;
-        outputUserNameInFile.open((inputUserName + ".txt").c_str());
+        outputUserNameOutFile.open((inputUserName + ".txt").c_str());
         
         for (counter = 0; counter <= 2 ; counter++)
         {
-            outputUserNameOutFile >> defaultData[counter] << "\n";
+            outputUserNameOutFile << defaultData[counter] << "\n";
         }
         
         outputUserNameOutFile.close();
@@ -108,7 +116,8 @@ void displayStats(string displayStatsUser)
     statsInfile.open((userNameStats + ".txt").c_str());
      while (!statsInfile.eof())
         {
-            getline(statsInfile,userStats);
+            getline(statsInfile,userStats[counter]);
+            counter++;
             cout << data << endl;
         }
     statsInfile.close();
@@ -116,14 +125,15 @@ void displayStats(string displayStatsUser)
 }
 
 //user validation
-string validateUserResponse()
+void validateUserResponse(string userEntry) //needs work on logic
 {
-    string validReponse;
-    string invalidResponse;
+    string response = userEntry;
     
-    cout << "validates that user has entered an alphanumerical character. this is the very basic of user validation. functions will also have their own input specific validation"
+    while (!isdigit(response))
+    {
+        cout << "Special characters are not allowed. Only numbers and letters. Please try again.\n";
+    }
     
-    return validReponse;
 }
 
 
