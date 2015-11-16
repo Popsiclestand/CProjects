@@ -5,6 +5,7 @@
 #include <string>
 #include <cstdlib>
 #include <fstream>
+#include <ctime>
 //#include <boost/algorithm/string.hpp>
 
 using namespace std;
@@ -12,15 +13,16 @@ using namespace std;
 //function prototype declarations
 void credits();
 string retriveStats();
-string menu();
-void validateUserResponse(string userEntry);
+void menu(string menuUser);
+string validateUserResponse(string userEntry);
+char validateUserResponse(char userEntry);
 bool generateAddition();
 bool generateSubtraction();
 bool generateMultiplication();
 bool generateDivision();
 void quit(userQuit);
-void displayStats(displayStatsUser);
-void updateStats(updateStatsUser);
+void displayStats(string displayStatsUser);
+void updateStats(string updateStatsUser);
 
 
 //global constants declarations
@@ -30,14 +32,17 @@ const double WRONG_ANSWER = 0.03;
 
 int main()
 {
+    string name;
     credits();
     cout << string(50, '\n'); //clears screen for the init menu
     retrieveStats();
     cout << string(50, '\n'); //clears screen for the menu
-    displayStats(retrieveStats());
-    cout << endl;
-    menu();
+    name = retrieveStats();
+    displayStats(name);
+    cout << "\n\n";
+    menu(name);
     updateStats(inputUserName,correct);
+    
     
     return 0;
 }
@@ -64,6 +69,7 @@ void credits()
 string retrieveStats()
 {
     string inputUserName = "";
+    string temp;
     ifstream inputUserNameInFile;
     ofstream outputUserNameOutFile;
     int defaultData[3] = {0,0,0};
@@ -74,7 +80,8 @@ string retrieveStats()
     cin.clear();
     cin.ignore();
     
-    validateUserResponse(inputUserName);
+    temp = validateUserResponse(inputUserName);
+    inputUserName = temp;
     
     inputUserNameInFile.open((inputUserName + ".txt").c_str());
     
@@ -105,52 +112,135 @@ void displayStats(string displayStatsUser)
     string userNameStats = displayStatsUser; //pulls from the return value of initMenu
     ifstream statsInfile;
     ofstream statsOutfile;
-    int userStats[3] = {}; //holds an array of user stats pulled from file
+    string userStats[3] = {}; //holds an array of user stats pulled from file
     string userStatsTitles[3] = {"Number of correct answers: ", "Number of wrong answers: ", "Amount of money earned: "};
     int counter = 0;
-    int data;
+    string data;
+    int strLength = userNameStats.length();
     
-    cout << "Current Statistics for " << userNameStats << ":" << endl;
+    cout << "Current Statistics for " << userNameStats << endl;
     cout << "***********************************" << endl;
     
     statsInfile.open((userNameStats + ".txt").c_str());
      while (!statsInfile.eof())
         {
-            getline(statsInfile,userStats[counter]);
-            counter++;
-            cout << data << endl;
+            while(getline(statsInfile,data))
+            {
+                cout << userStatsTitles[counter] << data << "\n";
+                counter++;
+            }
         }
     statsInfile.close();
     
 }
 
 //user validation
-void validateUserResponse(string userEntry) //needs work on logic
+string validateUserResponse(string userEntry) //needs work on logic
 {
     string response = userEntry;
+    bool valid = 0;
+    int counter = 0;
+    int stringLength;
     
-    while (!isdigit(response))
+    stringLength = response.length();
+    
+    while (counter < stringLength || stringLength == 0)
     {
-        cout << "Special characters are not allowed. Only numbers and letters. Please try again.\n";
+        if (!isalpha(response[counter]))
+        {
+            cout << "Special characters are not allowed. Only numbers and letters. Please try again.\n";
+            cout << ">> ";
+            cin >> response;
+            cin.clear();
+            cin.ignore();
+            counter = 0;
+        }
+        else
+        {
+            counter++;
+        }
     }
+    return response;
+    
+}
+
+//user validation
+char validateUserResponse(char userEntry)
+{
+    char response = userEntry;
+    bool valid = 0;
+    int counter = 0;
+    int stringLength;
+    
+    
+    while (counter == 0)
+    {
+        if (!isdigit(response))
+        {
+            cout << "Special characters are not allowed. Please try again.\n";
+            cout << ">> ";
+            cin >> response;
+            cin.clear();
+            cin.ignore();
+            counter = 0;
+        }
+        else
+        {
+            counter++;
+            break;
+        }
+    }
+    return response;
     
 }
 
 
 //main menu that presents options
-bool menu()
+void menu(string menuUser)
 {
-    char userSelection;
-    cout "generates menu and asks user for alphanumerical selection"
-    validateUserResponse();
-    //if user passes input validation, if/else statements and fail statements will select one of the following functions
-    generateAddition();
-    generateSubtraction();
-    generateMultiplication();
-    generateDivision();
-    quit();
+    string user = menuUser;
+    char selection;
+
+    cout << "**********************************************" << endl;
+    cout << "**********      THE MATH GAME!      **********" << endl;
+    cout << "**********************************************" << endl;
+    cout << "**********************************************" << endl;
+    cout << "*  What kind of math problem would you like? *" << endl;
+    cout << "*          (1) Addition                      *" << endl;
+    cout << "*          (2) Subtraction                   *" << endl;
+    cout << "*          (3) Multiplication                *" << endl;
+    cout << "*          (4) Division                      *" << endl; //remember to protect from divide by zero error for this selection
+    cout << "*          (5) Quit                          *" << endl;
+    cout << "**********************************************" << endl;
+    cout << ">>";
     
-    return correct;
+    cin >> selection;
+    
+    selection = validateUserResponse(selection);
+    
+    switch (selection)
+    {
+        case '1':
+        bool generateAddition();
+        break;
+        
+        case '2':
+        cout << "Subtraction Function Here" << endl;
+        break;
+        
+        case '3':
+        cout << "Multiplication Function Here" << endl;
+        break;
+        
+        case '4':
+        cout << "Dividsion Function Here" << endl;
+        break;
+        
+        case '5':
+        cout << "Quit function" << endl;
+        break;
+
+    }
     
 }
 
@@ -175,7 +265,7 @@ bool generateAddition()
     answer = number1 + number2;
     
     cout << number1 << " + " << number2 << endl;
-    cout << "Answer: " << endl;
+    cout << ">>" << endl;
     cin << userNumber
     
     if (isdigit(userNumber))
