@@ -200,6 +200,7 @@ void menu(string menuUser)
 {
     string user = menuUser;
     char selection;
+    bool money;
 
     cout << "**********************************************" << endl;
     cout << "**********      THE MATH GAME!      **********" << endl;
@@ -215,33 +216,38 @@ void menu(string menuUser)
     cout << ">>";
     
     cin >> selection;
-    
+    cin.clear();
+    cin.ignore();
     selection = validateUserResponse(selection);
+    cout << selection <<endl;
     
     switch (selection)
     {
         case '1':
-        bool generateAddition();
+        money = generateAddition();
         break;
         
         case '2':
-        cout << "Subtraction Function Here" << endl;
+        money = generateSubtraction();
         break;
         
         case '3':
-        cout << "Multiplication Function Here" << endl;
+        money = generateMultiplication();
         break;
         
         case '4':
-        cout << "Dividsion Function Here" << endl;
+        money = generateDivision();
         break;
         
         case '5':
         cout << "Quit function" << endl;
         break;
+        
+        default:
+        cout << "Error, quitting program.\n" << endl;
 
     }
-    
+
 }
 
 
@@ -249,162 +255,172 @@ void menu(string menuUser)
 bool generateAddition()
 {
     int unsigned seedOne = time(0);
-    int unsigned seedTwo = time(0);
-    
+
     int number1;
     int number2;
     int userNumber;
-    int answer;
+    int answer=0;
     bool correct;
     
     srand(seedOne);
-    srand(seedTwo);
-    number1 = rand(seedOne) % 100;
-    number2 = rand(seedTwo) % 100;
+    number1 = rand() % 100;
+    number2 = rand() % 100;
     
     answer = number1 + number2;
     
-    cout << number1 << " + " << number2 << endl;
-    cout << ">>" << endl;
-    cin << userNumber
+    cout << number1 << " + " << number2 << " = ";
+    cin >> userNumber;
+    cin.clear();
+    cin.ignore();
     
-    if (isdigit(userNumber))
+    //validateUserResponse(userNumber);
+    
+    if (userNumber == answer)
     {
-        if (userNumber == answer)
-        {
-            correct = true;
-        }
-        else
-        {
-            correct = false;
-        }
+        cout << "CORRECT!";
+        correct = true;
     }
+    else
+    {
+        cout << "INCORRECT!";
+        correct = false;
+    }
+  
     return correct;
 
 }
 
+//generates subtraction problem and answer
 bool generateSubtraction()
 {
     int unsigned seedOne = time(0);
-    int unsigned seedTwo = time(0);
-    
+
     int number1;
     int number2;
     int userNumber;
-    int answer;
+    int answer=0;
     bool correct;
     
     srand(seedOne);
-    srand(seedTwo);
-    number1 = rand(seedOne) % 100;
-    number2 = rand(seedTwo) % 100;
+    number1 = rand() % 100;
+    number2 = rand() % 100;
     
     answer = number1 - number2;
     
-    cout << number1 << " - " << number2 << endl;
-    cout << "Answer: " << endl;
-    cin << userNumber
+    cout << number1 << " - " << number2 << " = ";
+    cin >> userNumber;
+    cin.clear();
+    cin.ignore();
     
-    if (isdigit(userNumber))
+    //validateUserResponse(userNumber);
+    
+    if (userNumber == answer)
     {
-        if (userNumber == answer)
-        {
-            correct = true;
-        }
-        else
-        {
-            correct = false;
-        }
+        cout << "CORRECT!";
+        correct = true;
     }
-    
+    else
+    {
+        cout << "INCORRECT!";
+        correct = false;
+    }
+  
     return correct;
-    
+
 }
 
+//generates multiplication problem and answer
 bool generateMultiplication()
 {
     int unsigned seedOne = time(0);
-    int unsigned seedTwo = time(0);
-    
+
     int number1;
     int number2;
     int userNumber;
-    int answer;
+    int answer=0;
     bool correct;
     
     srand(seedOne);
-    srand(seedTwo);
-    number1 = rand(seedOne) % 100;
-    number2 = rand(seedTwo) % 100;
+    number1 = rand() % 100;
+    number2 = rand() % 100;
     
     answer = number1 * number2;
     
-    cout << number1 << " x " << number2 << endl;
-    cout << "Answer: " << endl;
-    cin << userNumber
+    cout << number1 << " x " << number2 << " = ";
+    cin >> userNumber;
+    cin.clear();
+    cin.ignore();
     
-    if (isdigit(userNumber))
+    //validateUserResponse(userNumber);
+    
+    if (userNumber == answer)
     {
-        if (userNumber == answer)
-        {
-            correct = true;
-        }
-        else
-        {
-            correct = false;
-        }
+        cout << "CORRECT!";
+        correct = true;
     }
+    else
+    {
+        cout << "INCORRECT!";
+        correct = false;
+    }
+  
     return correct;
 
 }
 
+//generates division problem and answer
 bool generateDivision()
 {
     int unsigned seedOne = time(0);
-    int unsigned seedTwo = time(0);
-    
-    int number1;
-    int number2;
+
+    double number1=0;
+    double number2=0;
     int userNumber;
-    int answer;
+    double answer;
     bool correct;
     
-    while (number2 == 0) //protects for any divide by zero errors.
+    while (number2 == 0 || number1 < number2)
     {
         srand(seedOne);
-        srand(seedTwo);
         number1 = rand() % 100;
+        //cout << number1 << endl; //printing for debugging
         number2 = rand() % 100;
+        //cout <<number2<<endl; //printing for debugging
     }
     
     answer = number1 / number2;
+    cout << answer << endl;
     
-    cout << number1 << " / " << number2 << endl;
-    cout << "Answer: " << endl;
-    cin << userNumber
+    cout << "(Round up to the nearest integer)\n" << number1 << " / " << number2 << " = ";
+    cin >> userNumber;
+    cin.clear();
+    cin.ignore();
     
-    if (isdigit(userNumber))
+    //validateUserResponse(userNumber);
+    
+    if (userNumber == answer)
     {
-        if (userNumber == answer)
-        {
-            correct = true;
-        }
-        else
-        {
-            correct = false;
-        }
+        cout << "CORRECT!";
+        correct = true;
     }
-    
+    else
+    {
+        cout << "INCORRECT!";
+        correct = false;
+    }
+  
     return correct;
+
 }
+
 
 void quit(quitUser) //parameter gathered from initial launch of retrieveStats
 {
     string userName = quitUser);
-    cout << "Thank you for playing, " << userName; << "!";
+    cout << "Thank you for playing, " << userName; << "! Goodbye.";
 }
 
 void updateStats(string updateStatsUser, bool updateStatsAnswer)
 {
-    
+    cout << "This updates stats" <<endl;
 }

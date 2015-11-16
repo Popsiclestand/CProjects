@@ -16,6 +16,11 @@ int validateUserResponse(int userEntry);
 void displayStats(string displayStatsUser);
 void menu(string menuUser);
 bool generateAddition();
+bool generateDivision();
+bool generateSubtraction();
+bool generateMultiplication();
+void updateStats(string updateStatsUser, bool moneyEarned);
+
 
 int main()
 {
@@ -147,7 +152,7 @@ char validateUserResponse(char userEntry) //needs work on logic
         else
         {
             counter++;
-            break;
+            //break;
         }
     }
     return response;
@@ -163,8 +168,8 @@ int validateUserResponse(int userEntry)
     int stringLength;
     
     
-    while (valid == 0)
-    {
+    //while (valid == 0)
+    //{
         if(!isdigit(response))
         {
             cout << "Numbers only! Please try again.\n";
@@ -172,14 +177,13 @@ int validateUserResponse(int userEntry)
             cin >> response;
             cin.clear();
             cin.ignore();
-            counter++;
+            //counter++;
         }
         else
         {
             valid = 1;
-            break;
         }
-    }
+    //}
     return response;
     
 }
@@ -218,48 +222,59 @@ void menu(string menuUser)
 {
     string user = menuUser;
     char selection;
-
-    cout << "**********************************************" << endl;
-    cout << "**********      THE MATH GAME!      **********" << endl;
-    cout << "**********************************************" << endl;
-    cout << "**********************************************" << endl;
-    cout << "*  What kind of math problem would you like? *" << endl;
-    cout << "*          (1) Addition                      *" << endl;
-    cout << "*          (2) Subtraction                   *" << endl;
-    cout << "*          (3) Multiplication                *" << endl;
-    cout << "*          (4) Division                      *" << endl; //remember to protect from divide by zero error for this selection
-    cout << "*          (5) Quit                          *" << endl;
-    cout << "**********************************************" << endl;
-    cout << ">>";
+    bool money;
     
-    cin >> selection;
-    
-    selection = validateUserResponse(selection);
-    
-    switch (selection)
+    while (selection != 5)
     {
-        case '1':
-        cout << generateAddition();
-        break;
         
-        case '2':
-        cout << "Subtraction Function Here" << endl;
-        break;
+        cout << "**********************************************" << endl;
+        cout << "**********      THE MATH GAME!      **********" << endl;
+        cout << "**********************************************" << endl;
+        cout << "**********************************************" << endl;
+        cout << "*  What kind of math problem would you like? *" << endl;
+        cout << "*          (1) Addition                      *" << endl;
+        cout << "*          (2) Subtraction                   *" << endl;
+        cout << "*          (3) Multiplication                *" << endl;
+        cout << "*          (4) Division                      *" << endl; //remember to protect from divide by zero error for this selection
+        cout << "*          (5) Quit                          *" << endl;
+        cout << "**********************************************" << endl;
+        cout << ">>";
         
-        case '3':
-        cout << "Multiplication Function Here" << endl;
-        break;
+        cin >> selection;
+        cin.clear();
+        cin.ignore();
+        selection = validateUserResponse(selection);
+        cout << selection <<endl;
         
-        case '4':
-        cout << "Dividsion Function Here" << endl;
-        break;
-        
-        case '5':
-        cout << "Quit function" << endl;
-        break;
-
-    }
+        switch (selection)
+        {
+            case '1':
+            money = generateAddition();
+            break;
+            
+            case '2':
+            money = generateSubtraction();
+            break;
+            
+            case '3':
+            money = generateMultiplication();
+            break;
+            
+            case '4':
+            money = generateDivision();
+            break;
+            
+            case '5':
+            cout << "Quit function" << endl;
+            break;
+            
+            default:
+            cout << "Error, quitting program.\n" << endl;
     
+        }
+        
+        updateStats(menuUser,money);
+    }
 }
 
 //generates addition problem and answer
@@ -284,7 +299,7 @@ bool generateAddition()
     cin.clear();
     cin.ignore();
     
-    validateUserResponse(userNumber);
+    //validateUserResponse(userNumber);
     
     if (userNumber == answer)
     {
@@ -299,4 +314,159 @@ bool generateAddition()
   
     return correct;
 
+}
+
+//generates division problem and answer
+bool generateDivision()
+{
+    int unsigned seedOne = time(0);
+
+    double number1=0;
+    double number2=0;
+    int userNumber;
+    double answer;
+    bool correct;
+    
+    while (number2 == 0 || number1 < number2)
+    {
+        srand(seedOne);
+        number1 = rand() % 100;
+        //cout << number1 << endl; //printing for debugging
+        number2 = rand() % 100;
+        //cout <<number2<<endl; //printing for debugging
+    }
+    
+    answer = number1 / number2;
+    cout << answer << endl;
+    
+    cout << "(Round up to the nearest integer)\n" << number1 << " / " << number2 << " = ";
+    cin >> userNumber;
+    cin.clear();
+    cin.ignore();
+    
+    //validateUserResponse(userNumber);
+    
+    if (userNumber == answer)
+    {
+        cout << "CORRECT!";
+        correct = true;
+    }
+    else
+    {
+        cout << "INCORRECT!";
+        correct = false;
+    }
+  
+    return correct;
+
+}
+
+//generates multiplication problem and answer
+bool generateMultiplication()
+{
+    int unsigned seedOne = time(0);
+
+    int number1;
+    int number2;
+    int userNumber;
+    int answer=0;
+    bool correct;
+    
+    srand(seedOne);
+    number1 = rand() % 100;
+    number2 = rand() % 100;
+    
+    answer = number1 * number2;
+    
+    cout << number1 << " x " << number2 << " = ";
+    cin >> userNumber;
+    cin.clear();
+    cin.ignore();
+    
+    //validateUserResponse(userNumber);
+    
+    if (userNumber == answer)
+    {
+        cout << "CORRECT!";
+        correct = true;
+    }
+    else
+    {
+        cout << "INCORRECT!";
+        correct = false;
+    }
+  
+    return correct;
+
+}
+
+//generates subtraction problem and answer
+bool generateSubtraction()
+{
+    int unsigned seedOne = time(0);
+
+    int number1;
+    int number2;
+    int userNumber;
+    int answer=0;
+    bool correct;
+    
+    srand(seedOne);
+    number1 = rand() % 100;
+    number2 = rand() % 100;
+    
+    answer = number1 - number2;
+    
+    cout << number1 << " - " << number2 << " = ";
+    cin >> userNumber;
+    cin.clear();
+    cin.ignore();
+    
+    //validateUserResponse(userNumber);
+    
+    if (userNumber == answer)
+    {
+        cout << "CORRECT!";
+        correct = true;
+    }
+    else
+    {
+        cout << "INCORRECT!";
+        correct = false;
+    }
+  
+    return correct;
+
+}
+
+void updateStats(string updateStatsUser, bool moneyEarned)
+{
+    string userNameStats = updateStatsUser; //pulls from the return value of initMenu
+    bool money = moneyEarned;
+    ifstream statsInfile;
+    ofstream statsOutfile;
+    string userStats[3] = {}; //holds an array of user stats pulled from file
+    string userStatsTitles[3] = {"Number of correct answers: ", "Number of wrong answers: ", "Amount of money earned: "};
+    int counter = 0;
+    string data;
+    int strLength = userNameStats.length();
+
+    statsInfile.open((userNameStats + ".txt").c_str());
+     while (!statsInfile.eof()) //somehow use this to read the contents of the file into the 3 item array up there
+        {
+            while(getline(statsInfile,data))
+            {
+                //userStats[counter] << data << "\n";
+                userStats[counter] << data << "\n";
+                counter++;
+            }
+        }
+    statsInfile.close();
+    
+    
+    //construct a second while statement to write to the file with the values stored in the userStats array
+    //if/else statement that adds or subtracts from the third value using the global constants depending on the value of money
+    //if/else statement that adds 1 to either of the first two values depending on the value of money
+    //these two statements will of course be combined
+    
 }

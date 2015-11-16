@@ -13,11 +13,13 @@ void stats()
 }
 
 
-void mainMenu()
+//main menu that presents options
+bool menu(string menuUser)
 {
-    //string user = u;
-    //string userNameUpper;
+    string user = menuUser;
     char selection;
+    bool money;
+
     cout << "**********************************************" << endl;
     cout << "**********      THE MATH GAME!      **********" << endl;
     cout << "**********************************************" << endl;
@@ -27,35 +29,43 @@ void mainMenu()
     cout << "*          (2) Subtraction                   *" << endl;
     cout << "*          (3) Multiplication                *" << endl;
     cout << "*          (4) Division                      *" << endl; //remember to protect from divide by zero error for this selection
-    cout << "*          (n/N) to quit                     *" << endl;
+    cout << "*          (5) Quit                          *" << endl;
     cout << "**********************************************" << endl;
+    cout << ">>";
+    
     cin >> selection;
+    cin.clear();
+    cin.ignore();
+    selection = validateUserResponse(selection);
+    cout << selection <<endl;
+    
     switch (selection)
     {
         case '1':
-        cout << "Addition Function Here" << endl;
+        money = generateAddition();
         break;
         
         case '2':
-        cout << "Subtraction Function Here" << endl;
+        money = generateSubtraction();
         break;
         
         case '3':
-        cout << "Multiplication Function Here" << endl;
+        money = generateMultiplication();
         break;
         
         case '4':
-        cout << "Dividsion Function Here" << endl;
+        money = generateDivision();
         break;
         
-        case 'N':
-        cout << "Quit function" << endl;
+        case '5':
+        
         break;
         
-        case 'n':
-        cout << "Quit function" << endl;
-        break;
+        default:
+        cout << "Error, quitting program.\n" << endl;
+
     }
+    return money;
     
 }
 
