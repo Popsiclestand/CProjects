@@ -99,8 +99,9 @@ string retrieveStats()
     return inputUserName;
 }
 
-//user validation
-string validateUserResponse(string userEntry) //needs work on logic
+//user validation for string entries ONLY!! Checks for the use of special characters
+//could possibly add in the uppercase conversion as well
+string validateUserResponse(string userEntry)
 {
     string response = userEntry;
     bool valid = 0;
@@ -125,17 +126,21 @@ string validateUserResponse(string userEntry) //needs work on logic
             counter++;
         }
     }
+    cout << response << endl;
     return response;
     
 }
 
-//user validation
-char validateUserResponse(char userEntry) //needs work on logic
+//user validation --- Does not work when 
+//
+char validateUserResponse(char userEntry)
 {
     char response = userEntry;
     bool valid = 0;
     int counter = 0;
     int stringLength;
+    //cin.clear();
+    //cin.ignore();
     
     
     while (counter == 0)
@@ -159,34 +164,6 @@ char validateUserResponse(char userEntry) //needs work on logic
     
 }
 
-//user validation //THIS IS BROKEN!!!
-int validateUserResponse(int userEntry)
-{
-    int response = userEntry;
-    bool valid = 0;
-    int counter = 0;
-    int stringLength;
-    
-    
-    //while (valid == 0)
-    //{
-        if(!isdigit(response))
-        {
-            cout << "Numbers only! Please try again.\n";
-            cout << ">> ";
-            cin >> response;
-            cin.clear();
-            cin.ignore();
-            //counter++;
-        }
-        else
-        {
-            valid = 1;
-        }
-    //}
-    return response;
-    
-}
 
 //function that displays saved user stats
 void displayStats(string displayStatsUser)
@@ -224,7 +201,7 @@ void menu(string menuUser)
     char selection;
     bool money;
     
-    while (selection != 5)
+    while (selection != '5')
     {
         
         cout << "**********************************************" << endl;
@@ -235,7 +212,7 @@ void menu(string menuUser)
         cout << "*          (1) Addition                      *" << endl;
         cout << "*          (2) Subtraction                   *" << endl;
         cout << "*          (3) Multiplication                *" << endl;
-        cout << "*          (4) Division                      *" << endl; //remember to protect from divide by zero error for this selection
+        cout << "*          (4) Division(currently broken)    *" << endl; //remember to protect from divide by zero error for this selection
         cout << "*          (5) Quit                          *" << endl;
         cout << "**********************************************" << endl;
         cout << ">>";
@@ -244,8 +221,8 @@ void menu(string menuUser)
         cin.clear();
         cin.ignore();
         selection = validateUserResponse(selection);
-        cout << selection <<endl;
-        
+        cout << selection << endl;
+
         switch (selection)
         {
             case '1':
@@ -265,15 +242,23 @@ void menu(string menuUser)
             break;
             
             case '5':
-            cout << "Quit function" << endl;
             break;
-            
+
             default:
             cout << "Error, quitting program.\n" << endl;
     
         }
         
-        updateStats(menuUser,money);
+        if (selection != '5')
+        {
+            updateStats(menuUser,money);
+        }
+        else
+        {
+            cout << "quit function" << endl;
+        }
+
+
     }
 }
 
@@ -299,16 +284,16 @@ bool generateAddition()
     cin.clear();
     cin.ignore();
     
-    //validateUserResponse(userNumber);
+validateUserResponse(userNumber);
     
     if (userNumber == answer)
     {
-        cout << "CORRECT!";
+        cout << "CORRECT!\n\n";
         correct = true;
     }
     else
     {
-        cout << "INCORRECT!";
+        cout << "INCORRECT!\n\n";
         correct = false;
     }
   
@@ -321,18 +306,18 @@ bool generateDivision()
 {
     int unsigned seedOne = time(0);
 
-    double number1=0;
-    double number2=0;
+    int number1=0;
+    int number2=0;
     int userNumber;
-    double answer;
+    int answer;
     bool correct;
     
     while (number2 == 0 || number1 < number2)
     {
         srand(seedOne);
-        number1 = rand() % 100;
+        number1 = rand() % 500;
         //cout << number1 << endl; //printing for debugging
-        number2 = rand() % 100;
+        number2 = rand() % 500;
         //cout <<number2<<endl; //printing for debugging
     }
     
@@ -344,16 +329,16 @@ bool generateDivision()
     cin.clear();
     cin.ignore();
     
-    //validateUserResponse(userNumber);
+validateUserResponse(userNumber);
     
     if (userNumber == answer)
     {
-        cout << "CORRECT!";
+        cout << "CORRECT!\n\n";
         correct = true;
     }
     else
     {
-        cout << "INCORRECT!";
+        cout << "INCORRECT!\n\n";
         correct = false;
     }
   
@@ -383,16 +368,16 @@ bool generateMultiplication()
     cin.clear();
     cin.ignore();
     
-    //validateUserResponse(userNumber);
+validateUserResponse(userNumber);
     
     if (userNumber == answer)
     {
-        cout << "CORRECT!";
+        cout << "CORRECT!\n\n";
         correct = true;
     }
     else
     {
-        cout << "INCORRECT!";
+        cout << "INCORRECT!\n\n";
         correct = false;
     }
   
@@ -422,46 +407,46 @@ bool generateSubtraction()
     cin.clear();
     cin.ignore();
     
-    //validateUserResponse(userNumber);
+validateUserResponse(userNumber);
     
     if (userNumber == answer)
     {
-        cout << "CORRECT!";
+        cout << "CORRECT!\n\n";
         correct = true;
     }
     else
     {
-        cout << "INCORRECT!";
+        cout << "INCORRECT!\n\n";
         correct = false;
     }
-  
     return correct;
 
 }
 
 void updateStats(string updateStatsUser, bool moneyEarned)
 {
-    string userNameStats = updateStatsUser; //pulls from the return value of initMenu
-    bool money = moneyEarned;
-    ifstream statsInfile;
-    ofstream statsOutfile;
-    string userStats[3] = {}; //holds an array of user stats pulled from file
-    string userStatsTitles[3] = {"Number of correct answers: ", "Number of wrong answers: ", "Amount of money earned: "};
-    int counter = 0;
-    string data;
-    int strLength = userNameStats.length();
+    // string userNameStats = updateStatsUser; //pulls from the return value of initMenu
+    // bool money = moneyEarned;
+    // ifstream statsInfile;
+    // ofstream statsOutfile;
+    // string userStats[3] = {}; //holds an array of user stats pulled from file
+    // string userStatsTitles[3] = {"Number of correct answers: ", "Number of wrong answers: ", "Amount of money earned: "};
+    // int counter = 0;
+    // string data;
+    // int strLength = userNameStats.length();
 
-    statsInfile.open((userNameStats + ".txt").c_str());
-     while (!statsInfile.eof()) //somehow use this to read the contents of the file into the 3 item array up there
-        {
-            while(getline(statsInfile,data))
-            {
-                //userStats[counter] << data << "\n";
-                userStats[counter] << data << "\n";
-                counter++;
-            }
-        }
-    statsInfile.close();
+    // statsInfile.open((userNameStats + ".txt").c_str());
+    //  while (!statsInfile.eof()) //somehow use this to read the contents of the file into the 3 item array up there
+    //     {
+    //         while(getline(statsInfile,data))
+    //         {
+    //             //userStats[counter] << data << "\n";
+    //             userStats[counter] << data << "\n";
+    //             counter++;
+    //         }
+    //     }
+    // statsInfile.close();
+    cout << "This bit will update the stats...somehow lol" << endl;
     
     
     //construct a second while statement to write to the file with the values stored in the userStats array
