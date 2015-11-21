@@ -164,8 +164,39 @@ string validateUserResponse(string userEntry) //needs work on logic
     
 }
 
-//user validation
+//user validation - char
 char validateUserResponse(char userEntry)
+{
+    char response = userEntry;
+    bool valid = 0;
+    int counter = 0;
+    int stringLength;
+    
+    
+    while (counter == 0)
+    {
+        if (!isdigit(response))
+        {
+            cout << "Special characters are not allowed. Please try again.\n";
+            cout << ">> ";
+            cin >> response;
+            cin.clear();
+            cin.ignore();
+            counter = 0;
+        }
+        else
+        {
+            counter++;
+            break;
+        }
+    }
+    return response;
+    
+}
+
+
+//user validation - int
+int validateUserResponse(int userEntry)
 {
     char response = userEntry;
     bool valid = 0;
@@ -347,7 +378,9 @@ bool generateMultiplication()
     answer = number1 * number2;
     
     cout << number1 << " x " << number2 << " = ";
-    cin >> userNumber;
+    
+    
+    ;
     cin.clear();
     cin.ignore();
     
@@ -416,7 +449,7 @@ bool generateDivision()
 
 void quit(quitUser) //parameter gathered from initial launch of retrieveStats
 {
-    string userName = quitUser);
+    string userName = quitUser;
     cout << "Thank you for playing, " << userName; << "! Goodbye.";
 }
 
